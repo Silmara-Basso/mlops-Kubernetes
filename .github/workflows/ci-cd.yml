@@ -1,0 +1,48 @@
+name: QCLab
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'modelos/**'
+      - 'treinamento/**'
+      - 'app.py'
+      - 'requirements.txt'
+      - 'Dockerfile'
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    container:
+      image: catthehacker/ubuntu:act-latest
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Instalar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.12
+
+      - name: Instalar dependências Python
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Treinar modelo
+        run: python treinamento/treina_modelo.py
+
+      - name: Construir imagem Docker com novo modelo
+        run: docker build -t qc-app:latest .
+
+      - name: Validar manifestos Kubernetes
+        uses: stefanprodan/kube-tools@v1
+        with:
+          command: |
+            kubeconform -summary -strict k8s/

@@ -1,56 +1,45 @@
-# mlops-Kubernetes
-Lab de Otimização e Escalabilidade Para Pipeline de Cl/CD com Kubernetes
+# Projeto 6 - Versionamento e Controle de Dados em Pipelines CI/CD com Github Actions e Kubernetes
 
+# Abra o terminal ou prompt de comando, navegue até a pasta com os arquivos e execute o comando abaixo para criar um ambiente virtual:
 
-# Versionamento e Controle de Dados em Pipelines CI/CD com Github Actions e Kubernetes
+conda create --name pipep6 python=3.12
 
-- Crie um ambiente virtual:
-````
-python3 -m venv qcvenv
-source qcvenv/bin/activate
-pyenv local 3.12
-pip install pip
+# Ative o ambiente:
+
+conda activate pipep6 (ou: source activate pipep6)
+
+# Instale o pip e as dependências:
+
+conda install pip
 pip install -r requirements.txt 
-````
-- Garanta que o Docker Desktop esteja instalado
 
-- Instale o Kubectl na sua máquina host
-https://kubernetes.io/pt-br/docs/tasks/tools/
-````
-brew install kubectl
-````
-Valide a instalação checando a versão com o comando:
-````
+# Instale o Docker Desktop.
+
+# ATENÇÃO: Abra a janela do Docker Desktop e mantenha aberta para inicializar o motor de execução Docker.
+
+# Instale o Kubectl na sua máquina host conforme instruções das aulas no capítulo anterior.
+
+# Valide a instalação checando a versão com o comando:
 kubectl version --client
-````
 
-- Instale o minikube na sua máquina host.
-https://minikube.sigs.k8s.io/docs/start/?arch=%2Fmacos%2Farm64%2Fstable%2Fbinary+download
-````
-brew install minikube
-````
-````
-brew unlink minikube
-brew link minikube
-````
-````
+# Enquanto não visualizar a versão do kubectl não adianta seguir em frente. Primeiro instale o Kubectl na máquina host.
+
+# Instale o minikube na sua máquina host conforme instruções das aulas no capítulo anterior.
+
+# Verifica a versão do Minikube instalada
 minikube version
-````
-- Inicia o cluster Kubernetes local com Minikube
-````
-minikube start
-````
 
-- Treine e salve a versão inicial do modelo
-````
-python treinamento/treina_modelo.py
-````
+# Inicia o cluster Kubernetes local com Minikube (sempre que reiniciar o computador, tem que executar este comando)
+minikube start
+
+# Treine e salve a versão inicial do modelo
+python treinamento/dsa_treina_modelo.py
 
 # Construa a imagem Docker localmente após treinar o modelo
-docker build -t qc-app:latest .
+docker build -t dsa-p6-app:latest .
 
 # Carregue a imagem Docker para o Minikube
-minikube image load qc-app:latest
+minikube image load dsa-p6-app:latest
 
 # Aplica o manifesto YAML para criar o deployment Kubernetes
 kubectl apply -f k8s/deployment.yaml 
@@ -62,8 +51,24 @@ kubectl apply -f k8s/service.yaml
 kubectl get pods
 
 # Acesse a app via web
-minikube service qc-app-service
+minikube service dsa-p6-app-service
 
+# Configure o Workflow do GitHub Actions conforme mostrado nas aulas.
+
+# Instale o Git na sua máquina
+https://git-scm.com/
+
+# Abra OUTRO terminal ou prompt, navegue até a pasta com os arquivos e inicialize o repositório Git localmente com os comandos abaixo:
+
+git config --global user.email "aluno@teste.com"
+git config --global user.name "Aluno DSA"
+
+git init
+git add .
+git commit -m "Versão inicial do Projeto DSA"
+
+# Instale o Act na sua máquina para testar o GitHub Actions localmente
+https://nektosact.com/installation/index.html
 
 # Abra o terminal ou prompt, navegue até a pasta com os arquivos e execute um act push (similar a um git push):
 
@@ -85,10 +90,10 @@ act push --container-architecture linux/amd64 (necessário para máquinas com pr
 # Execute os comandos abaixo para atualizar a imagem em tempo real no cluster Kubernetes:
 
 # Carrega a nova imagem no Minikube
-minikube image load qc-app:latest
+minikube image load dsa-p6-app:latest
 
 # Atualiza o deployment no Kubernetes para usar a imagem nova
-kubectl set image deployment/qc-app-deployment qc-app-container=qc-app:latest
+kubectl set image deployment/dsa-p6-app-deployment dsa-p6-app-container=dsa-p6-app:latest
 
 # Esses passos acima devem ser executados sempre que houver mudança no código de treinamento do modelo e então o Pipeline CI/CD será executado.
 
@@ -102,11 +107,6 @@ kubectl set image deployment/qc-app-deployment qc-app-container=qc-app:latest
 
 # Use os comandos abaixo para desativar o ambiente virtual e remover o ambiente (opcional):
 
-### Use os comandos abaixo para desativar o ambiente virtual o ambiente (opcional):
-````
-deactivate
-````
-
-![App](/images/app.png)
-
+conda deactivate
+conda remove --name pipep6 --all
 
