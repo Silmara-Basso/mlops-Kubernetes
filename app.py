@@ -26,7 +26,7 @@ Informe os dados coletados durante o processo de fabricação:
 
 Após inserir os valores, clique em **Prever**.
                  
-testando atualização v1.1 agora
+testando latest
 """)
 
 # Botão de suporte na barra lateral

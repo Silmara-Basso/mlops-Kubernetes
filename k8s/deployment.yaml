@@ -1,5 +1,5 @@
 # Especifica a versão da API Kubernetes usada
-apiVersion: apps/v1
+apiVersion: apps/latest
 
 # Define que este recurso é um Deployment
 kind: Deployment
@@ -31,7 +31,7 @@ spec:
       # Lista de contêineres no pod
       containers:
       - name: qc-app-container  # Nome do contêiner
-        image: qc-app:v1.1   # Imagem do contêiner 
+        image: qc-app:latest   # Imagem do contêiner 
         imagePullPolicy: Never      # Não tenta baixar a imagem do Docker Hub
         ports:
         - containerPort: 8501       # Porta exposta pelo contêiner

@@ -85,31 +85,26 @@ git push
 
 ### Ao fazer o push para o repositório remoto (no GitHub), o GitHub Actions executará automaticamente o mesmo fluxo para validar, treinar o modelo e gerar uma nova imagem Docker, deixando tudo pronto para o deploy.
 
-
-### Se quiser, execute os comandos abaixo para atualizar a imagem em tempo real no cluster Kubernetes local:
-1) No app.py em st.sidebar.write acrescente "testando atualização v1.1 agora"
-Atualize a app e recrie a imagem
+## Para manter o ambirnyr local atualizado (em app.py acrescentei "Testando latest" para validar)
+1) Treine e salve a versão do modelo
 ````
-docker build -t qc-app:v1.1 .
-````
-2) Atualize a imagem no cluster Minikube:
-````
-minikube image load qc-app:v1.1
-````
-3) Atualize seu Deployment YAML com a nova versão da imagem
-Edite k8s/deployment.yaml e modifique esta linha:
-````
-image: qc-app:v1.1
-````
-4) Aplique novamente o Deployment Kubernetes:
-````
-kubectl apply -f k8s/deployment.yaml
-````
-5) Confirme se a atualização foi bem-sucedida:
-```
-kubectl get pods
+python treinamento/treina_modelo.py
 ````
 
+2) Construa a imagem Docker localmente após treinar o modelo
+````
+docker build -t qc-app:latest .
+````
+3) Carrega a nova imagem no Minikube
+````
+minikube image load qc-app:latest
+````
+
+4) Atualiza o deployment no Kubernetes para usar a imagem nova
+````
+kubectl set image deployment/qc-app-deployment qc-app-container=qc-app:latest
+````
+5) faça o refresh da app no bowser e veja que já aparece o "testando latest""
 
 ### Use os comandos abaixo para desativar o ambiente virtual o ambiente (opcional):
 ````
