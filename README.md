@@ -46,41 +46,42 @@ minikube start
 python treinamento/treina_modelo.py
 ````
 
-# Construa a imagem Docker localmente após treinar o modelo
+- Construa a imagem Docker localmente após treinar o modelo
+````
 docker build -t qc-app:latest .
+````
 
-# Carregue a imagem Docker para o Minikube
+- Carregue a imagem Docker para o Minikube
+````
 minikube image load qc-app:latest
+````
 
-# Aplica o manifesto YAML para criar o deployment Kubernetes
+- Aplica o manifesto YAML para criar o deployment Kubernetes
+````
 kubectl apply -f k8s/deployment.yaml 
+````
 
-# Aplica o manifesto YAML para criar o serviço Kubernetes
+- Aplica o manifesto YAML para criar o serviço Kubernetes
+````
 kubectl apply -f k8s/service.yaml 
+````
 
-# Verifique os pods criados
+- Verifique os pods criados
+````
 kubectl get pods
+````
 
-# Acesse a app via web
+- Acesse a app via web
+````
 minikube service qc-app-service
+````
 
-
-# Abra o terminal ou prompt, navegue até a pasta com os arquivos e execute um act push (similar a um git push):
-
-act push
-act push --container-architecture linux/amd64 (necessário para máquinas com processador Apple Silicon, Família M)
-
-# Parabéns, seu Pipeline CI/CD foi criado e automatizado! Vamos testar:
-
-# Faça uma alteração no script de treinamento ou altere os dados (nesse caso, dentro do script de treinamento).
-
-# Execute os comandos abaixo para atualizar o repositório Git:
-
+- Execute os comandos abaixo para atualizar o repositório Git:
+````
 git add .
-git commit -m "Versão 2 do projeto"
-
-act push
-act push --container-architecture linux/amd64 (necessário para máquinas com processador Apple Silicon, Família M)
+git commit -m ":tada: Commit full"
+gi push
+````
 
 # Execute os comandos abaixo para atualizar a imagem em tempo real no cluster Kubernetes:
 
