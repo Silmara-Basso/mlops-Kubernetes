@@ -80,28 +80,36 @@ minikube service qc-app-service
 ````
 git add .
 git commit -m ":tada: Commit full"
-gi push
+git push
 ````
 
-# Execute os comandos abaixo para atualizar a imagem em tempo real no cluster Kubernetes:
+### Ao fazer o push para o repositório remoto (no GitHub), o GitHub Actions executará automaticamente o mesmo fluxo para validar, treinar o modelo e gerar uma nova imagem Docker, deixando tudo pronto para o deploy.
 
-# Carrega a nova imagem no Minikube
-minikube image load qc-app:latest
 
-# Atualiza o deployment no Kubernetes para usar a imagem nova
-kubectl set image deployment/qc-app-deployment qc-app-container=qc-app:latest
+### Se quiser, execute os comandos abaixo para atualizar a imagem em tempo real no cluster Kubernetes local:
+1) No app.py em st.sidebar.write acrescente "testando atualização v1.1 agora"
+Atualize a app e recrie a imagem
+````
+docker build -t qc-app:v1.1 .
+````
+2) Atualize a imagem no cluster Minikube:
+````
+minikube image load qc-app:v1.1
+````
+3) Atualize seu Deployment YAML com a nova versão da imagem
+Edite k8s/deployment.yaml e modifique esta linha:
+````
+image: qc-app:v1.1
+````
+4) Aplique novamente o Deployment Kubernetes:
+````
+kubectl apply -f k8s/deployment.yaml
+````
+5) Confirme se a atualização foi bem-sucedida:
+```
+kubectl get pods
+````
 
-# Esses passos acima devem ser executados sempre que houver mudança no código de treinamento do modelo e então o Pipeline CI/CD será executado.
-
-# A partir daqui os passos são:
-
-# 1- Modificar ou atualizar script de modelo, app ou dados.
-# 2- Commit e envio das alterações (git add, git commit e git push ou act push).
-# 3- Executar act push para testar localmente se o fluxo de CI/CD (treinamento, build da imagem Docker e validação Kubernetes) funciona corretamente.
-
-# Depois de garantir que tudo funciona corretamente no ambiente local com o Act, ao fazer o push para o repositório remoto (no GitHub, por exemplo), o GitHub Actions executará automaticamente o mesmo fluxo para validar, treinar o modelo e gerar uma nova imagem Docker, deixando tudo pronto para o deploy.
-
-# Use os comandos abaixo para desativar o ambiente virtual e remover o ambiente (opcional):
 
 ### Use os comandos abaixo para desativar o ambiente virtual o ambiente (opcional):
 ````

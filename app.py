@@ -25,6 +25,8 @@ Informe os dados coletados durante o processo de fabricação:
 - **Tempo de Cozimento (minutos)**
 
 Após inserir os valores, clique em **Prever**.
+                 
+testando atualização v1.1 agora
 """)
 
 # Botão de suporte na barra lateral

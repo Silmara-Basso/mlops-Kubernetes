@@ -31,7 +31,7 @@ spec:
       # Lista de contêineres no pod
       containers:
       - name: qc-app-container  # Nome do contêiner
-        image: qc-app:latest    # Imagem do contêiner 
+        image: qc-app:v1.1   # Imagem do contêiner 
         imagePullPolicy: Never      # Não tenta baixar a imagem do Docker Hub
         ports:
         - containerPort: 8501       # Porta exposta pelo contêiner
