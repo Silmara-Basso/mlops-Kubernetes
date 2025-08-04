@@ -87,7 +87,7 @@ download: https://nektosact.com/installation/index.html
 
 ### Ao fazer o push para o repositório remoto (no GitHub), o GitHub Actions executará automaticamente o mesmo fluxo para validar, treinar o modelo e gerar uma nova imagem Docker, deixando tudo pronto para o deploy.
 
-## Para manter o ambirnyr local atualizado (em app.py acrescentei "Testando latest" para validar)
+## Para manter o ambiente local atualizado 
 1) Treine e salve a versão do modelo
 ````
 python treinamento/treina_modelo.py
