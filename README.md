@@ -82,6 +82,8 @@ git add .
 git commit -m ":tada: Commit full"
 git push
 ````
+Obs: # Você pode instalar o Act na sua máquina para testar o GitHub Actions localmente e usar "act push" ou "act push --container-architecture linux/amd64" (para mac) no lugar do git push
+download: https://nektosact.com/installation/index.html
 
 ### Ao fazer o push para o repositório remoto (no GitHub), o GitHub Actions executará automaticamente o mesmo fluxo para validar, treinar o modelo e gerar uma nova imagem Docker, deixando tudo pronto para o deploy.
 
