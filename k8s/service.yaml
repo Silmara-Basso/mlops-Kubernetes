@@ -1,5 +1,5 @@
 # Especifica a versão da API Kubernetes usada
-apiVersion: latest
+apiVersion: v1
 
 # Define que este recurso é um Service
 kind: Service
